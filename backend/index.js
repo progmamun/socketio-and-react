@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const { users } = require("./lib/users");
 
 const http = require("http").Server(app);
 const cors = require("cors");
@@ -10,8 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/users", (req, res) => {
-  // TODO: implement
-  res.json([]);
+  res.json(users);
 });
 
 app.get("/comments", (req, res) => {
