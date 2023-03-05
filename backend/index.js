@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const { users } = require("./lib/users");
+const { listComments, createComment } = require("./lib/comments");
 
 const http = require("http").Server(app);
 const cors = require("cors");
@@ -15,13 +16,13 @@ app.get("/users", (req, res) => {
 });
 
 app.get("/comments", (req, res) => {
-  // TODO: implement
-  res.json([]);
+  const comments = listComments();
+  res.json(comments);
 });
 
-app.post("/comments", async (req, res) => {
-  // TODO: implement
-  res.json(null);
+app.post("/comments", (req, res) => {
+  const comment = createComment(req.body);
+  res.json(comment);
 });
 
 http.listen(PORT, () => {
