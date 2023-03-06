@@ -4,3 +4,8 @@
 
 - `yarn add express cors nodemon socket.io
 `
+
+## Client package:
+
+- `npx create-react-app ./`
+- `yarn add date-fns`
