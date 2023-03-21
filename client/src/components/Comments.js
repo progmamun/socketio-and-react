@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Comment from "./Comment";
 
-const Comments = ({ selectedUserId }) => {
+const Comments = ({ socket, selectedUserId }) => {
   const [comments, setComments] = useState([]);
   const [input, setInput] = useState("");
 
@@ -24,6 +24,19 @@ const Comments = ({ selectedUserId }) => {
   useEffect(() => {
     fetchComments();
   }, []);
+
+  useEffect(() => {
+    socket.on("new-comment", ({ comment }) => {
+      // Only insert comments when the current user is not the author
+      if (comment.author.id !== selectedUserId) {
+        setComments((comments) => [...comments, comment]);
+      }
+    });
+
+    return () => {
+      socket.off("new-comment");
+    };
+  }, [setComments, socket, selectedUserId]);
 
   return (
     <div className="Comments">
